@@ -7,11 +7,11 @@ Command Query Responsibility Segregation in PHP
 
 ### Command execution
 
-![CommandExecution.svg](docs/CommandExecution.svg)
+![CommandExecution.svg](https://cdn.rawgit.com/BartoszBartniczak/CQRS/master/docs/CommandExecution.svg)
 
 ### Query execution
 
-![QueryExecution.svg](docs/QueryExecution.svg)
+![QueryExecution.svg](https://cdn.rawgit.com/BartoszBartniczak/CQRS/master/docs/QueryExecution.svg)
 
 ### Tests
 
