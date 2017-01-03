@@ -21,7 +21,7 @@ abstract class CommandHandler
     /**
      * CommandHandler constructor.
      */
-    final public function __construct()
+    public function __construct()
     {
         $this->nextCommands = new CommandList();
     }

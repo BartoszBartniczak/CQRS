@@ -59,21 +59,12 @@ abstract class BasicCommandBus implements CommandBus
      */
     public function handle(Command $command)
     {
-        $this->checkTypeOfCommand($command);
-
         if ($command instanceof Query) {
             return $this->handleQuery($command);
         } else {
             $this->handleCommand($command);
         }
     }
-
-    /**
-     * @param Command $command
-     * @return void
-     * @throws \InvalidArgumentException
-     */
-    abstract protected function checkTypeOfCommand(Command $command);
 
     /**
      * @param Query $query
