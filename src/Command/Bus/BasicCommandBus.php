@@ -161,5 +161,13 @@ abstract class BasicCommandBus implements CommandBus
         }
     }
 
+    /**
+     * @return mixed
+     */
+    protected function getOutput()
+    {
+        return $this->output;
+    }
+
 
 }
