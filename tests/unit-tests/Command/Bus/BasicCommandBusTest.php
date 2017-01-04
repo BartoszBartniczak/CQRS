@@ -67,6 +67,7 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
      * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handle
      * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handleQuery
      * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::tryToHandleCommand
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::getOutput()
      */
     public function testOutputForQuery()
     {

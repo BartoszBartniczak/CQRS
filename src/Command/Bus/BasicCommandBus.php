@@ -80,7 +80,7 @@ abstract class BasicCommandBus implements CommandBus
 
         $this->saveOutput($data);
 
-        return $this->output;
+        return $this->getOutput();
     }
 
     /**
@@ -131,6 +131,14 @@ abstract class BasicCommandBus implements CommandBus
     }
 
     /**
+     * @return mixed
+     */
+    protected function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
      * @param Command $command
      * @throws CannotHandleTheCommandException
      * @throws CannotFindHandlerException
@@ -159,14 +167,6 @@ abstract class BasicCommandBus implements CommandBus
             foreach ($commandList as $nextCommand)
                 $this->handle($nextCommand);
         }
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getOutput()
-    {
-        return $this->output;
     }
 
 
