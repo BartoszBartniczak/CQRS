@@ -4,7 +4,21 @@ Command Query Responsibility Segregation in PHP
 ----------------------------------------
 
 ### Table of contents
-[TOC]
+
+* [Table of contents](#table-of-contents)
+	* [Preface](#preface)
+    * [Components](#components)
+    	* [Command](#command)
+        * [Query](#query)
+        * [Command Handler](#command-handler)
+        	* [Example](#example)
+		* [CommandBus](#commandbus)
+    		* [How to register CommandHandler?](#how-to-register-commandhandler)
+			* [How command is executed?](#how-command-is-executed)
+            * [How query is executed?](#how-query-is-executed)
+            * [Example](#example-1)
+    * [Tests](#tests)
+    	* [Unit tests](#unit-tests)
 
 ### Preface
 
