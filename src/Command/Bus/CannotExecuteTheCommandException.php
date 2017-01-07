@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\CQRS\Command\Bus;
 
 
-class CannotHandleTheCommandException extends Exception
+class CannotExecuteTheCommandException extends Exception
 {
 
 }

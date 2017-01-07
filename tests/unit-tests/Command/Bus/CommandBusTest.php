@@ -14,15 +14,15 @@ use BartoszBartniczak\CQRS\Command\Handler\Exception as HandlerException;
 use BartoszBartniczak\CQRS\Command\Query;
 
 
-class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
+class CommandBusTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handle
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handleCommand
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::findHandler
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::__construct
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::registerHandler
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::execute
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::executeCommand
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::findHandler
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::__construct
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::registerHandler
      */
     public function testHandle()
     {
@@ -36,15 +36,15 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $command Command */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->getMockForAbstractClass();
-        /* @var $commandBus BasicCommandBus */
+        /* @var $commandBus CommandBus */
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::findHandler
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::findHandler
      */
     public function testFindHandlerThrowsCannotFindHandlerException()
     {
@@ -56,18 +56,18 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $command Command */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->getMockForAbstractClass();
-        /* @var $commandBus BasicCommandBus */
-        $commandBus->handle($command);
+        /* @var $commandBus CommandBus */
+        $commandBus->execute($command);
     }
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::saveOutput
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handle
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handleQuery
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::tryToHandleCommand
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::getOutput()
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::saveOutput
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::execute
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::executeQuery
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::tryToHandleCommand
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::getOutput()
      */
     public function testOutputForQuery()
     {
@@ -89,20 +89,20 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $command Command */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->getMockForAbstractClass();
-        /* @var $commandBus BasicCommandBus */
+        /* @var $commandBus CommandBus */
         $commandBus->registerHandler('QueryMock', $commandHandler);
-        $output = $commandBus->handle($command);
+        $output = $commandBus->execute($command);
 
         $this->assertSame($dateTime, $output);
     }
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handle
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handleCommand
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::saveDataInRepository
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::clearOutput
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::execute
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::executeCommand
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::saveDataInRepository
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::clearOutput
      */
     public function testDataIsSavedInRepository()
     {
@@ -122,7 +122,7 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $command Command */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->setMethods([
                 'saveDataInRepository'
             ])
@@ -131,18 +131,18 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->method('saveDataInRepository')
             ->with($dateTime);
 
-        /* @var $commandBus BasicCommandBus */
+        /* @var $commandBus CommandBus */
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::handleHandlerException
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::tryToHandleCommand
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::handleHandlerException
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::tryToHandleCommand
      */
     public function testHandleError()
     {
-        $this->expectException(CannotHandleTheCommandException::class);
+        $this->expectException(CannotExecuteTheCommandException::class);
         $this->expectExceptionMessage("Command 'CommandMock' cannot be handled.");
 
         $commandHandler = $this->getMockBuilder(CommandHandler::class)
@@ -159,16 +159,16 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $command Command */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->getMockForAbstractClass();
-        /* @var $commandBus BasicCommandBus */
+        /* @var $commandBus CommandBus */
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
 
     }
 
     /**
-     * @covers \BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus::passNextCommandsToTheBus
+     * @covers \BartoszBartniczak\CQRS\Command\Bus\CommandBus::executeNextCommands
      */
     public function testPassNextCommandsToTheBus()
     {
@@ -203,7 +203,7 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
             ->willReturn($commandList);
         /* @var $commandHandler CommandHandler */
 
-        $commandBus = $this->getMockBuilder(BasicCommandBus::class)
+        $commandBus = $this->getMockBuilder(CommandBus::class)
             ->setMethods([
                 'findHandler'
             ])
@@ -216,10 +216,10 @@ class BasicCommandBusTest extends \PHPUnit_Framework_TestCase
                 $command3
             )
             ->willReturn($commandHandler);
-        /* @var $commandBus BasicCommandBus */
+        /* @var $commandBus CommandBus */
 
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command1);
+        $commandBus->execute($command1);
 
     }
 }
