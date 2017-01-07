@@ -5,20 +5,19 @@ Command Query Responsibility Segregation in PHP
 
 ### Table of contents
 
-* [Table of contents](#table-of-contents)
-	* [Preface](#preface)
-    * [Components](#components)
-    	* [Command](#command)
-        * [Query](#query)
-        * [Command Handler](#command-handler)
-        	* [Example](#example)
-		* [CommandBus](#commandbus)
-    		* [How to register CommandHandler?](#how-to-register-commandhandler)
-			* [How command is executed?](#how-command-is-executed)
-            * [How query is executed?](#how-query-is-executed)
-            * [Example](#example-1)
-    * [Tests](#tests)
-    	* [Unit tests](#unit-tests)
+* [Preface](#preface)
+* [Components](#components)
+    * [Command](#command)
+    * [Query](#query)
+    * [Command Handler](#command-handler)
+        * [Example](#example)
+    * [CommandBus](#commandbus)
+        * [How to register CommandHandler?](#how-to-register-commandhandler)
+        * [How command is executed?](#how-command-is-executed)
+        * [How query is executed?](#how-query-is-executed)
+        * [Example](#example-1)
+* [Tests](#tests)
+    * [Unit tests](#unit-tests)
 
 ### Preface
 
@@ -192,7 +191,11 @@ $simpleCommandBus->registerHandler(SendEmailCommand::class, $sendEmailHandler);
 Now you can execute the Command using CommandBus:
 
 ```php
-$simpleCommandBus->execute($sendEmailCommand);
+try{
+    $simpleCommandBus->execute($sendEmailCommand);
+}catch(CannotExecuteTheCommandException $cannotExecuteTheCommandException){
+// TODO: //Do some buisiness logic in here.
+}
 ```
 
 ##### How command is executed?
